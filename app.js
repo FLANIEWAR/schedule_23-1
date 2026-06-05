@@ -139,7 +139,7 @@ const renderSchedule = () => {
               typeLabel = 'Практика (семинар)';
               typeClass = 'practice';
             }
-            return `\n        <div class="schedule-card pair-${it.pair}">\n          <div class="card-header">\n            <div class="card-date-time">${date} <span class="card-time">${time}</span></div>\n            <div class="card-aud">${audDisp}</div>\n          </div>\n          <div class="card-body">\n            <div class="card-pair">${it.pair}</div>\n            <div class="card-type ${typeClass}">${typeLabel}</div>\n            <div class="card-title">${it.name}</div>\n          </div>\n          <div class="card-footer">\n            <div class="card-fio">${it.fio}</div>\n          </div>\n        </div>`;
+            return `\n        <div class="schedule-card pair-${it.pair}">\n          <div class="card-header">\n            <div class="card-date-time"><span class="card-time">${time}</span></div>\n            <div class="card-aud">${audDisp}</div>\n          </div>\n          <div class="card-body">\n            <div class="card-pair">${it.pair}</div>\n            <div class="card-type ${typeClass}">${typeLabel}</div>\n            <div class="card-title">${it.name}</div>\n          </div>\n          <div class="card-footer">\n            <div class="card-fio">${it.fio}</div>\n          </div>\n        </div>`;
             })
           .join('');
         return `\n      <div class="date-group">\n        <div class="date-label">${date}</div>\n        ${cards}\n      </div>`;
