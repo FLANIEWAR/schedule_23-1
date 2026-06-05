@@ -87,8 +87,8 @@ const updateWeekIndicator = () => {
     weekIndicator.textContent = 'Нет недель';
     if (prevWeekButton) prevWeekButton.disabled = true;
     if (nextWeekButton) nextWeekButton.disabled = true;
-    return;
-  }
+            return `
+        <div class="schedule-card pair-${it.pair}">
   const wk = weeks[currentWeekIndex] || weeks[0];
   // show only the week label (e.g. "1 неделя")
   weekIndicator.textContent = wk.key;
@@ -126,7 +126,20 @@ const renderSchedule = () => {
             const time = pairTimes[it.pair] || '';
             const audMatch = String(it.aud).match(/(\d+(-\d+)?)/);
             const audDisp = audMatch ? audMatch[0] : String(it.aud).replace(/^Корпус\s*/i, '').trim();
-            return `\n        <div class="schedule-card">\n          <div class="card-header">\n            <div class="card-date-time">${date} <span class="card-time">${time}</span></div>\n            <div class="card-aud">${audDisp}</div>\n          </div>\n          <div class="card-body">\n            <div class="card-pair">${it.pair}</div>\n            <div class="card-title">${it.name}</div>\n          </div>\n          <div class="card-footer">\n            <div class="card-fio">${it.fio}</div>\n          </div>\n        </div>`;
+            const nameLower = String(it.name).toLowerCase();
+            let typeLabel = 'Лекция';
+            let typeClass = 'lecture';
+            if (nameLower.includes('зачёт') || nameLower.includes('зачет')) {
+              typeLabel = 'Зачёт';
+              typeClass = 'exam';
+            } else if (nameLower.includes('экзамен')) {
+              typeLabel = 'Экзамен';
+              typeClass = 'exam';
+            } else if (nameLower.includes('практик') || nameLower.includes('семинар') || nameLower.includes('практ')) {
+              typeLabel = 'Практика (семинар)';
+              typeClass = 'practice';
+            }
+            return `\n        <div class="schedule-card pair-${it.pair}">\n          <div class="card-header">\n            <div class="card-date-time">${date} <span class="card-time">${time}</span></div>\n            <div class="card-aud">${audDisp}</div>\n          </div>\n          <div class="card-body">\n            <div class="card-pair">${it.pair}</div>\n            <div class="card-type ${typeClass}">${typeLabel}</div>\n            <div class="card-title">${it.name}</div>\n          </div>\n          <div class="card-footer">\n            <div class="card-fio">${it.fio}</div>\n          </div>\n        </div>`;
             })
           .join('');
         return `\n      <div class="date-group">\n        <div class="date-label">${date}</div>\n        ${cards}\n      </div>`;
