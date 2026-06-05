@@ -99,7 +99,7 @@ const updateWeekIndicator = () => {
 const renderSchedule = () => {
   if (!scheduleBody) return;
   if (!weeks || weeks.length === 0 || currentWeekIndex < 0) {
-    scheduleBody.innerHTML = `\n      <tr class="empty-row">\n        <td colspan="6">Расписание пустое.</td>\n      </tr>\n    `;
+    scheduleBody.innerHTML = `\n      <tr class="empty-row">\n        <td colspan="5">Расписание пустое.</td>\n      </tr>\n    `;
     updateWeekIndicator();
     return;
   }
@@ -130,16 +130,12 @@ const renderSchedule = () => {
         </div>
       </td>`;
 
-  let firstRow = true;
-
   const scheduleRows = Object.values(groups)
     .map((group) => {
       return group.items
         .map((it, idx) => {
           if (idx === 0) {
-            const timeCell = firstRow ? timeColumn : '';
-            firstRow = false;
-            return `\n      <tr>\n        <td>${group.header.date}</td>\n        <td>${group.header.day}</td>\n        <td>${it.aud}</td>\n        <td>${it.name}</td>\n        ${timeCell}\n        <td>${it.fio}</td>\n      </tr}`;
+            return `\n      <tr>\n        <td>${group.header.date}</td>\n        <td>${group.header.day}</td>\n        <td>${it.aud}</td>\n        <td>${it.name}</td>\n        <td>${it.fio}</td>\n      </tr>`;
           }
           return `\n      <tr>\n        <td></td>\n        <td></td>\n        <td>${it.aud}</td>\n        <td>${it.name}</td>\n        <td>${it.fio}</td>\n      </tr>`;
         })
@@ -147,7 +143,7 @@ const renderSchedule = () => {
     })
     .join('');
 
-  scheduleBody.innerHTML = scheduleRows || `\n    <tr class="empty-row">\n      <td colspan="6">Расписание пустое.</td>\n    </tr>`;
+  scheduleBody.innerHTML = scheduleRows || `\n    <tr class="empty-row">\n      <td colspan="5">Расписание пустое.</td>\n    </tr>`;
   updateWeekIndicator();
 };
 
