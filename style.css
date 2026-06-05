@@ -269,9 +269,9 @@ button:hover {
 .schedule-card {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   align-items: stretch;
-  padding: 8px;
+  padding: 6px;
   border-radius: 10px;
   background: var(--surface-strong);
   border: 1px solid var(--border);
@@ -286,15 +286,15 @@ button:hover {
   content: '';
   position: absolute;
   left: 0;
-  top: 4px;
-  bottom: 4px;
+  top: 3px;
+  bottom: 3px;
   width: 4px;
   border-radius: 4px;
 }
 
 .schedule-card {
   padding-left: 12px; /* space for stripe */
-  padding-bottom: 26px; /* room for fio */
+  padding-bottom: 22px; /* room for fio */
 }
 
 .schedule-card.pair-4::before { background: #fb923c; }
@@ -318,10 +318,10 @@ button:hover {
 .card-type {
   display: inline-block;
   margin-top: 2px;
-  padding: 3px 7px;
+  padding: 2px 6px;
   border-radius: 6px;
   font-weight: 700;
-  font-size: 0.88rem;
+  font-size: 0.84rem;
 }
 .card-type.lecture { color: #db2777; background: rgba(219,39,119,0.06); }
 .card-type.practice { color: #f59e0b; background: rgba(245,158,11,0.06); }
@@ -330,32 +330,32 @@ button:hover {
 .card-pair {
   display: inline-block;
   background: rgba(0,0,0,0.04);
-  padding: 3px 7px;
+  padding: 2px 6px;
   border-radius: 6px;
   font-weight: 700;
-  margin-bottom: 4px;
-  font-size: 0.88rem;
+  margin-bottom: 3px;
+  font-size: 0.86rem;
 }
-.card-title { font-weight: 700; font-size: 0.98rem; }
+.card-title { font-weight: 700; font-size: 0.94rem; }
 .card-footer {
   position: relative;
-  min-height: 24px;
+  min-height: 20px;
 }
 .card-time {
   position: absolute;
-  left: 14px;
-  bottom: 8px;
+  left: 12px;
+  bottom: 6px;
   color: var(--muted);
   font-weight: 600;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
 }
 .card-fio {
   position: absolute;
-  right: 14px;
-  bottom: 8px;
+  right: 12px;
+  bottom: 6px;
   color: var(--muted);
   font-weight: 600;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
 }
 
 @media (max-width: 520px) {
