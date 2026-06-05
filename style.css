@@ -11,6 +11,19 @@
   --shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
 }
 
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #071026;
+  --surface: #071427;
+  --surface-strong: #0b263a;
+  --text: #e6eef9;
+  --muted: #9fb6d0;
+  --accent: #60a5fa;
+  --accent-soft: rgba(96,165,250,0.08);
+  --border: rgba(255,255,255,0.06);
+  --shadow: 0 20px 60px rgba(2,6,23,0.6);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -53,6 +66,22 @@ h1 {
 .header-actions {
   display: flex;
   align-items: center;
+}
+
+.theme-toggle {
+  margin-left: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.theme-toggle[aria-pressed="true"] {
+  background: var(--accent);
+  color: #fff;
 }
 
 .select-label {

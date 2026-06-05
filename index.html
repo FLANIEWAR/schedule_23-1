@@ -22,6 +22,7 @@
             <option value="group-c">Группа C</option>
           </select>
         </label>
+        <button id="themeToggle" class="theme-toggle" aria-pressed="false">Светлая</button>
       </div>
     </header>
 
@@ -47,16 +48,18 @@
           <table class="schedule-table" aria-label="Расписание пар">
             <thead>
               <tr>
-                <th>Дата</th>
-                <th>Пара</th>
-                <th>Дисциплина</th>
-              </tr>
-            </thead>
-            <tbody id="scheduleBody">
-              <tr class="empty-row">
-                <td colspan="3">Данные расписания будут добавлены позже.</td>
-              </tr>
-            </tbody>
+                  <th>Дата</th>
+                  <th>День</th>
+                  <th>Ауд.</th>
+                  <th>Наименование</th>
+                  <th>ФИО</th>
+                </tr>
+              </thead>
+              <tbody id="scheduleBody">
+                <tr class="empty-row">
+                  <td colspan="5">Данные расписания будут добавлены позже.</td>
+                </tr>
+              </tbody>
           </table>
         </div>
       </section>
