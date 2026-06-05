@@ -87,8 +87,8 @@ const updateWeekIndicator = () => {
     weekIndicator.textContent = 'Нет недель';
     if (prevWeekButton) prevWeekButton.disabled = true;
     if (nextWeekButton) nextWeekButton.disabled = true;
-            return `
-        <div class="schedule-card pair-${it.pair}">
+    return;
+  }
   const wk = weeks[currentWeekIndex] || weeks[0];
   // show only the week label (e.g. "1 неделя")
   weekIndicator.textContent = wk.key;
