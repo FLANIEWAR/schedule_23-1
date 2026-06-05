@@ -265,40 +265,47 @@ button:hover {
 }
 .schedule-card {
   display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 12px;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+  padding: 14px;
   border-radius: 12px;
   background: var(--surface-strong);
   border: 1px solid var(--border);
+  position: relative;
 }
-.card-time {
-  min-width: 110px;
-  color: var(--accent);
-  font-weight: 700;
-}
-.card-body {
-  flex: 1 1 auto;
-}
-.card-title {
-  font-weight: 700;
-}
-.card-meta {
-  margin-top: 8px;
-  color: var(--muted);
+.card-header {
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
+.card-date-time { color: var(--muted); font-weight: 600; }
+.card-date-time .card-time { color: var(--accent); margin-left: 8px; font-weight: 700; }
 .card-aud {
   background: var(--accent-soft);
-  padding: 4px 8px;
+  color: var(--accent);
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-weight: 800;
+}
+.card-body { /* content area */ }
+.card-pair {
+  display: inline-block;
+  background: rgba(0,0,0,0.04);
+  padding: 6px 10px;
   border-radius: 8px;
   font-weight: 700;
-  color: var(--accent);
+  margin-bottom: 8px;
 }
+.card-title { font-weight: 700; }
+.card-footer { position: relative; }
 .card-fio {
-  color: var(--text);
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+  color: var(--muted);
+  font-weight: 600;
 }
 
 @media (max-width: 520px) {

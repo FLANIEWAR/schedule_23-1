@@ -124,10 +124,10 @@ const renderSchedule = () => {
         const cards = items
           .map((it) => {
             const time = pairTimes[it.pair] || '';
-            const audMatch = String(it.aud).match(/(\d+)(?!.*\d)/);
+            const audMatch = String(it.aud).match(/(\d+(-\d+)?)/);
             const audDisp = audMatch ? audMatch[0] : String(it.aud).replace(/^Корпус\s*/i, '').trim();
-            return `\n        <div class="schedule-card">\n          <div class="card-time">${time} (${it.pair}-я пара)</div>\n          <div class="card-body">\n            <div class="card-title">${it.name}</div>\n            <div class="card-meta">\n              <span class="card-aud">${audDisp}</span>\n              <span class="card-fio">${it.fio}</span>\n            </div>\n          </div>\n        </div>`;
-        })
+            return `\n        <div class="schedule-card">\n          <div class="card-header">\n            <div class="card-date-time">${date} <span class="card-time">${time}</span></div>\n            <div class="card-aud">${audDisp}</div>\n          </div>\n          <div class="card-body">\n            <div class="card-pair">${it.pair}</div>\n            <div class="card-title">${it.name}</div>\n          </div>\n          <div class="card-footer">\n            <div class="card-fio">${it.fio}</div>\n          </div>\n        </div>`;
+            })
           .join('');
         return `\n      <div class="date-group">\n        <div class="date-label">${date}</div>\n        ${cards}\n      </div>`;
       })
