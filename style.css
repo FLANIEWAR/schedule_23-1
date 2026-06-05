@@ -254,6 +254,8 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  max-width: 720px;
+  margin-inline: auto;
 }
 .date-group {
   display: block;
@@ -274,6 +276,9 @@ button:hover {
   background: var(--surface-strong);
   border: 1px solid var(--border);
   position: relative;
+  max-width: 680px;
+  width: 100%;
+  margin-inline: auto;
 }
 
 /* Left accent stripe */
@@ -297,12 +302,11 @@ button:hover {
 .schedule-card.pair-6::before { background: #f59e0b; }
 .card-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 12px;
 }
-.card-date-time { color: var(--muted); font-weight: 600; font-size: 0.92rem; }
-.card-date-time .card-time { color: var(--accent); margin-left: 6px; font-weight: 700; font-size: 0.95rem; }
+.card-date-time { display: none; }
 .card-aud {
   background: var(--accent-soft);
   color: var(--accent);
@@ -333,11 +337,18 @@ button:hover {
   font-size: 0.9rem;
 }
 .card-title { font-weight: 700; font-size: 0.98rem; }
-.card-footer { position: relative; height: 0; }
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  min-height: 24px;
+}
+.card-time {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.92rem;
+}
 .card-fio {
-  position: absolute;
-  right: 12px;
-  bottom: 8px;
   color: var(--muted);
   font-weight: 600;
   font-size: 0.92rem;
