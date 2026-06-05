@@ -112,11 +112,21 @@ const renderSchedule = () => {
     '6': '17:10–17:55',
   };
 
-  const scheduleRows = entries
-    .map((it) => {
-      const time = pairTimes[it.pair] || '';
-      return `\n      <tr>\n        <td>${it.date}</td>\n        <td>${it.pair}</td>\n        <td>${it.aud}</td>\n        <td>${it.name}</td>\n        <td>${time}</td>\n        <td>${it.fio}</td>\n      </tr>`;
-    })
+  const groups = entries.reduce((acc, item) => {
+    if (!acc[item.date]) acc[item.date] = [];
+    acc[item.date].push(item);
+    return acc;
+  }, {});
+
+  const scheduleRows = Object.values(groups)
+    .map((groupItems) =>
+      groupItems
+        .map((it, idx) => {
+          const time = pairTimes[it.pair] || '';
+          return `\n      <tr>\n        <td>${idx === 0 ? it.date : ''}</td>\n        <td>${it.pair}</td>\n        <td>${it.aud}</td>\n        <td>${it.name}</td>\n        <td>${time}</td>\n        <td>${it.fio}</td>\n      </tr>`;
+        })
+        .join('')
+    )
     .join('');
 
   scheduleBody.innerHTML = scheduleRows || `\n    <tr class="empty-row">\n      <td colspan="6">Расписание пустое.</td>\n    </tr>`;
