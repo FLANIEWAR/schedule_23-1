@@ -276,7 +276,7 @@ button:hover {
   background: var(--surface-strong);
   border: 1px solid var(--border);
   position: relative;
-  max-width: 680px;
+  max-width: 720px;
   width: 100%;
   margin-inline: auto;
 }
@@ -338,17 +338,21 @@ button:hover {
 }
 .card-title { font-weight: 700; font-size: 0.98rem; }
 .card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  position: relative;
   min-height: 24px;
 }
 .card-time {
+  position: absolute;
+  left: 14px;
+  bottom: 8px;
   color: var(--muted);
   font-weight: 600;
   font-size: 0.92rem;
 }
 .card-fio {
+  position: absolute;
+  right: 14px;
+  bottom: 8px;
   color: var(--muted);
   font-weight: 600;
   font-size: 0.92rem;
