@@ -3,9 +3,9 @@ const todayDate = document.getElementById('todayDate');
 const scheduleBody = document.getElementById('scheduleBody');
 const prevWeekButton = document.getElementById('prevWeek');
 const nextWeekButton = document.getElementById('nextWeek');
-const groupSelect = document.getElementById('groupSelect');
+const themeToggle = document.getElementById('themeToggle');
 
-let currentWeek = 1;
+let currentWeekIndex = 0;
 
 const scheduleData = [
   { date: '03.06', day: 'Ср', aud: '32', name: 'Основы российской государственности и права человека', fio: 'Вязьмитинова И.П.' },
@@ -53,28 +53,109 @@ const renderToday = () => {
   todayDate.textContent = now.toLocaleDateString('ru-RU', options);
 };
 
-const renderSchedule = () => {
-  const scheduleRows = scheduleData
-    .map((item) => `
-      <tr>
-        <td>${item.date}</td>
-        <td>${item.day}</td>
-        <td>${item.aud}</td>
-        <td>${item.name}</td>
-        <td>${item.fio}</td>
-      </tr>
-    `)
-    .join('');
-
-  scheduleBody.innerHTML = scheduleRows || `
-    <tr class="empty-row">
-      <td colspan="5">Расписание пустое.</td>
-    </tr>
-  `;
+// --- weekly grouping ---
+const parseDate = (ddmm) => {
+  const [d, m] = ddmm.split('.').map(Number);
+  const year = new Date().getFullYear();
+  return new Date(year, m - 1, d);
 };
 
+// --- weekly grouping (fixed ranges supplied by user) ---
+const parseDate = (ddmm) => {
+  const [d, m] = ddmm.split('.').map(Number);
+  const year = new Date().getFullYear();
+  return new Date(year, m - 1, d);
+};
+
+const weeksRanges = [
+  { label: '1 неделя', start: '03.06', end: '06.06' },
+  { label: '2 неделя', start: '08.06', end: '13.06' },
+  { label: '3 неделя', start: '15.06', end: '20.06' },
+  { label: '4 неделя', start: '22.06', end: '27.06' },
+];
+
+const weeks = weeksRanges.map((r) => {
+  const start = parseDate(r.start);
+  const end = parseDate(r.end);
+  const items = scheduleData
+    .map((it) => ({ ...it, _dateObj: parseDate(it.date) }))
+    .filter((it) => it._dateObj >= start && it._dateObj <= end);
+  return { key: r.label, items, range: { min: start, max: end } };
+});
+
+  if (weeks.length === 0) {
+    weekIndicator.textContent = 'Нет недель';
+    prevWeekButton.disabled = true;
+    nextWeekButton.disabled = true;
+    return;
+  }
+  const wk = weeks[currentWeekIndex];
+  const label = `Неделя ${currentWeekIndex + 1} — ${formatShort(wk.range.min)} \u2014 ${formatShort(wk.range.max)}`;
+  weekIndicator.textContent = label;
+  prevWeekButton.disabled = currentWeekIndex <= 0;
+  nextWeekButton.disabled = currentWeekIndex >= weeks.length - 1;
+};
+
+const renderSchedule = () => {
+  if (!weeks || weeks.length === 0 || currentWeekIndex < 0) {
+    scheduleBody.innerHTML = `
+      <tr class="empty-row">
+        <td colspan="5">Расписание пустое.</td>
+      </tr>
+    `;
+    return;
+  }
+
+  const entries = weeks[currentWeekIndex].items.slice().sort((a, b) => a._dateObj - b._dateObj || a.aud - b.aud);
+
+  const groups = entries.reduce((acc, item) => {
+    const key = `${item.date}__${item.day}`;
+    if (!acc[key]) acc[key] = { header: { date: item.date, day: item.day }, items: [] };
+    acc[key].items.push(item);
+    return acc;
+  }, {});
+
+  const scheduleRows = Object.values(groups)
+    .map((group) => {
+      return group.items
+        .map((it, idx) => {
+          if (idx === 0) {
+            return `
+      <tr>
+        <td>${group.header.date}</td>
+        <td>${group.header.day}</td>
+        <td>${it.aud}</td>
+        <td>${it.name}</td>
+        <td>${it.fio}</td>
+      </tr>`;
+          }
+          return `
+      <tr>
+        <td></td>
+        <td></td>
+        <td>${it.aud}</td>
+        <td>${it.name}</td>
+        <td>${it.fio}</td>
+      </tr>`;
+        })
+        .join('');
+    })
+    .join('');
+
+  scheduleBody.innerHTML = scheduleRows;
+  updateWeekIndicator();
+};
+
+const gotoWeek = (delta) => {
+  if (weeks.length === 0) return;
+  currentWeekIndex = Math.max(0, Math.min(weeks.length - 1, currentWeekIndex + delta));
+  renderSchedule();
+};
+
+prevWeekButton.addEventListener('click', () => gotoWeek(-1));
+nextWeekButton.addEventListener('click', () => gotoWeek(1));
+
 // Theme toggle logic
-const themeToggle = document.getElementById('themeToggle');
 const applyTheme = (theme) => {
   document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : '');
   const isDark = theme === 'dark';
@@ -96,15 +177,10 @@ if (themeToggle) {
   });
 }
 
-const updateWeek = (delta) => {
-  currentWeek = Math.max(1, currentWeek + delta);
-  weekIndicator.textContent = `${currentWeek}-я неделя`;
-  renderSchedule();
-};
-
-prevWeekButton.addEventListener('click', () => updateWeek(-1));
-nextWeekButton.addEventListener('click', () => updateWeek(1));
-groupSelect.addEventListener('change', renderSchedule);
-
 renderToday();
+// default to week containing today's date (if any), otherwise first week
+const today = new Date();
+let foundIndex = weeks.findIndex((w) => today >= w.range.min && today <= w.range.max);
+if (foundIndex === -1) foundIndex = 0;
+currentWeekIndex = foundIndex;
 renderSchedule();
