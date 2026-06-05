@@ -113,36 +113,30 @@ const renderSchedule = () => {
     return acc;
   }, {});
 
-  const timeColumn = `
-      <td class="time-column" rowspan="${entries.length}">
-        <div class="time-column-inner">
-          <strong>1-я пара</strong><br />08:30–09:15 / 09:20–10:05<br />
-          <strong>Перерыв</strong> 15 мин<br /><br />
-          <strong>2-я пара</strong><br />10:20–11:05 / 11:10–11:55<br />
-          <strong>Перерыв</strong> 15 мин<br /><br />
-          <strong>3-я пара</strong><br />12:10–12:55 / 13:00–13:45<br />
-          <strong>Перерыв</strong> 45 мин<br /><br />
-          <strong>4-я пара</strong><br />14:30–15:15 / 15:20–16:05<br />
-          <strong>Перерыв</strong> 15 мин<br /><br />
-          <strong>5-я пара</strong><br />16:20–17:05 / 17:10–17:55<br />
-          <strong>Перерыв</strong> 15 мин<br /><br />
-          <strong>6-я пара</strong><br />18:10–18:55 / 19:00–19:45
-        </div>
-      </td>`;
-
-  let firstRow = true;
+  const timeSlots = [
+    '08:30–09:15',
+    '09:20–10:05',
+    '10:20–11:05',
+    '11:10–11:55',
+    '12:10–12:55',
+    '13:00–13:45',
+    '14:30–15:15',
+    '15:20–16:05',
+    '16:20–17:05',
+    '17:10–17:55',
+    '18:10–18:55',
+    '19:00–19:45',
+  ];
 
   const scheduleRows = Object.values(groups)
     .map((group) => {
       return group.items
         .map((it, idx) => {
-          let timeCell = '';
+          const time = timeSlots[idx] || '';
           if (idx === 0) {
-            timeCell = firstRow ? timeColumn : '';
-            firstRow = false;
-            return `\n      <tr>\n        <td>${group.header.date}</td>\n        <td>${group.header.day}</td>\n        <td>${it.aud}</td>\n        <td>${it.name}</td>\n        ${timeCell}\n        <td>${it.fio}</td>\n      </tr}`;
+            return `\n      <tr>\n        <td>${group.header.date}</td>\n        <td>${group.header.day}</td>\n        <td>${it.aud}</td>\n        <td>${it.name}</td>\n        <td>${time}</td>\n        <td>${it.fio}</td>\n      </tr>`;
           }
-          return `\n      <tr>\n        <td></td>\n        <td></td>\n        <td>${it.aud}</td>\n        <td>${it.name}</td>\n        ${timeCell}\n        <td>${it.fio}</td>\n      </tr>`;
+          return `\n      <tr>\n        <td></td>\n        <td></td>\n        <td>${it.aud}</td>\n        <td>${it.name}</td>\n        <td>${time}</td>\n        <td>${it.fio}</td>\n      </tr>`;
         })
         .join('');
     })
