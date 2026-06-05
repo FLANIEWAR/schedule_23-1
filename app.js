@@ -90,8 +90,8 @@ const updateWeekIndicator = () => {
     return;
   }
   const wk = weeks[currentWeekIndex] || weeks[0];
-  const label = `${wk.key} — ${formatShort(wk.range.min)} \u2014 ${formatShort(wk.range.max)}`;
-  weekIndicator.textContent = label;
+  // show only the week label (e.g. "1 неделя")
+  weekIndicator.textContent = wk.key;
   if (prevWeekButton) prevWeekButton.disabled = currentWeekIndex <= 0;
   if (nextWeekButton) nextWeekButton.disabled = currentWeekIndex >= weeks.length - 1;
 };
