@@ -293,8 +293,8 @@ button:hover {
 }
 
 .schedule-card {
-  padding-left: 12px; /* space for stripe */
-  padding-bottom: 22px; /* room for fio */
+  padding: 16px 16px 30px 16px;
+  padding-left: 20px; /* space for stripe */
 }
 
 .schedule-card.pair-4::before { background: #fb923c; }
@@ -302,57 +302,68 @@ button:hover {
 .schedule-card.pair-6::before { background: #f59e0b; }
 .card-header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   gap: 12px;
 }
-.card-date-time { display: none; }
+.card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .card-aud {
-  background: var(--accent-soft);
   color: var(--accent);
-  padding: 4px 8px;
-  border-radius: 8px;
   font-weight: 700;
-  font-size: 0.92rem;
+  font-size: 0.86rem;
 }
 .card-type {
   display: inline-block;
-  margin-top: 2px;
-  padding: 2px 6px;
-  border-radius: 6px;
+  padding: 3px 8px;
+  border-radius: 8px;
   font-weight: 700;
   font-size: 0.84rem;
 }
-.card-type.lecture { color: #db2777; background: rgba(219,39,119,0.06); }
-.card-type.practice { color: #f59e0b; background: rgba(245,158,11,0.06); }
-.card-type.exam { color: #fb923c; background: rgba(251,146,60,0.06); }
-.card-body { /* content area */ }
+.card-type.lecture { color: #db2777; background: rgba(219,39,119,0.12); }
+.card-type.practice { color: #f59e0b; background: rgba(245,158,11,0.12); }
+.card-type.exam { color: #fb923c; background: rgba(251,146,60,0.12); }
 .card-pair {
-  display: inline-block;
-  background: rgba(0,0,0,0.04);
-  padding: 2px 6px;
-  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.15);
+  color: var(--accent);
+  padding: 3px 8px;
+  border-radius: 999px;
   font-weight: 700;
-  margin-bottom: 3px;
-  font-size: 0.86rem;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
 }
-.card-title { font-weight: 700; font-size: 0.94rem; }
+.card-title {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+.card-subtitle {
+  color: var(--muted);
+  font-size: 0.86rem;
+  margin-top: 4px;
+}
 .card-footer {
   position: relative;
   min-height: 20px;
 }
 .card-time {
   position: absolute;
-  left: 12px;
-  bottom: 6px;
+  left: 20px;
+  bottom: 10px;
   color: var(--muted);
   font-weight: 600;
   font-size: 0.88rem;
 }
 .card-fio {
   position: absolute;
-  right: 12px;
-  bottom: 6px;
+  right: 20px;
+  bottom: 10px;
   color: var(--muted);
   font-weight: 600;
   font-size: 0.88rem;
