@@ -248,3 +248,60 @@ button:hover {
     justify-content: flex-start;
   }
 }
+
+/* Card-based schedule styles */
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.date-group {
+  display: block;
+}
+.date-label {
+  font-weight: 700;
+  color: var(--muted);
+  margin: 6px 0 8px;
+}
+.schedule-card {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+}
+.card-time {
+  min-width: 110px;
+  color: var(--accent);
+  font-weight: 700;
+}
+.card-body {
+  flex: 1 1 auto;
+}
+.card-title {
+  font-weight: 700;
+}
+.card-meta {
+  margin-top: 8px;
+  color: var(--muted);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.card-aud {
+  background: var(--accent-soft);
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.card-fio {
+  color: var(--text);
+}
+
+@media (max-width: 520px) {
+  .card-time { min-width: 80px; font-size: 0.95rem; }
+  .schedule-card { padding: 10px; }
+}

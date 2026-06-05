@@ -1,8 +1,8 @@
 const weekIndicator = document.getElementById('weekIndicator');
 const todayDate = document.getElementById('todayDate');
-const scheduleBody = document.getElementById('scheduleBody');
 const prevWeekButton = document.getElementById('prevWeek');
 const nextWeekButton = document.getElementById('nextWeek');
+const scheduleList = document.getElementById('scheduleList');
 const themeToggle = document.getElementById('themeToggle');
 
 let currentWeekIndex = 0;
@@ -97,9 +97,9 @@ const updateWeekIndicator = () => {
 };
 
 const renderSchedule = () => {
-  if (!scheduleBody) return;
+  if (!scheduleList) return;
   if (!weeks || weeks.length === 0 || currentWeekIndex < 0) {
-    scheduleBody.innerHTML = `\n      <tr class="empty-row">\n        <td colspan="6">Расписание пустое.</td>\n      </tr>\n    `;
+    scheduleList.innerHTML = `<p class="empty-row">Расписание пустое.</p>`;
     updateWeekIndicator();
     return;
   }
@@ -118,18 +118,22 @@ const renderSchedule = () => {
     return acc;
   }, {});
 
-  const scheduleRows = Object.values(groups)
-    .map((groupItems) =>
-      groupItems
-        .map((it, idx) => {
-          const time = pairTimes[it.pair] || '';
-          return `\n      <tr>\n        <td>${idx === 0 ? it.date : ''}</td>\n        <td>${it.pair}</td>\n        <td>${it.aud}</td>\n        <td>${it.name}</td>\n        <td>${time}</td>\n        <td>${it.fio}</td>\n      </tr>`;
+    const scheduleHTML = Object.keys(groups)
+      .map((date) => {
+        const items = groups[date];
+        const cards = items
+          .map((it) => {
+            const time = pairTimes[it.pair] || '';
+            const audMatch = String(it.aud).match(/(\d+)(?!.*\d)/);
+            const audDisp = audMatch ? audMatch[0] : String(it.aud).replace(/^Корпус\s*/i, '').trim();
+            return `\n        <div class="schedule-card">\n          <div class="card-time">${time} (${it.pair}-я пара)</div>\n          <div class="card-body">\n            <div class="card-title">${it.name}</div>\n            <div class="card-meta">\n              <span class="card-aud">${audDisp}</span>\n              <span class="card-fio">${it.fio}</span>\n            </div>\n          </div>\n        </div>`;
         })
-        .join('')
-    )
-    .join('');
+          .join('');
+        return `\n      <div class="date-group">\n        <div class="date-label">${date}</div>\n        ${cards}\n      </div>`;
+      })
+      .join('');
 
-  scheduleBody.innerHTML = scheduleRows || `\n    <tr class="empty-row">\n      <td colspan="6">Расписание пустое.</td>\n    </tr>`;
+    scheduleList.innerHTML = scheduleHTML || `<p class="empty-row">Расписание пустое.</p>`;
   updateWeekIndicator();
 };
 
