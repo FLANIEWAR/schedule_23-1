@@ -253,7 +253,7 @@ button:hover {
 .schedule-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 .date-group {
   display: block;
@@ -261,15 +261,16 @@ button:hover {
 .date-label {
   font-weight: 700;
   color: var(--muted);
-  margin: 6px 0 8px;
+  margin: 4px 0 6px;
+  font-size: 0.95rem;
 }
 .schedule-card {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   align-items: stretch;
-  padding: 14px;
-  border-radius: 12px;
+  padding: 10px;
+  border-radius: 10px;
   background: var(--surface-strong);
   border: 1px solid var(--border);
   position: relative;
@@ -280,15 +281,15 @@ button:hover {
   content: '';
   position: absolute;
   left: 0;
-  top: 8px;
-  bottom: 8px;
-  width: 6px;
-  border-radius: 6px;
+  top: 6px;
+  bottom: 6px;
+  width: 4px;
+  border-radius: 4px;
 }
 
 .schedule-card {
-  padding-left: 18px; /* space for stripe */
-  padding-bottom: 38px; /* room for fio */
+  padding-left: 14px; /* space for stripe */
+  padding-bottom: 30px; /* room for fio */
 }
 
 .schedule-card.pair-4::before { background: #fb923c; }
@@ -300,21 +301,23 @@ button:hover {
   align-items: center;
   gap: 12px;
 }
-.card-date-time { color: var(--muted); font-weight: 600; }
-.card-date-time .card-time { color: var(--accent); margin-left: 8px; font-weight: 700; }
+.card-date-time { color: var(--muted); font-weight: 600; font-size: 0.92rem; }
+.card-date-time .card-time { color: var(--accent); margin-left: 6px; font-weight: 700; font-size: 0.95rem; }
 .card-aud {
   background: var(--accent-soft);
   color: var(--accent);
-  padding: 6px 10px;
-  border-radius: 10px;
-  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.92rem;
 }
 .card-type {
   display: inline-block;
-  margin-top: 6px;
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-weight: 800;
+  margin-top: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.9rem;
 }
 .card-type.lecture { color: #db2777; background: rgba(219,39,119,0.06); }
 .card-type.practice { color: #f59e0b; background: rgba(245,158,11,0.06); }
@@ -323,19 +326,21 @@ button:hover {
 .card-pair {
   display: inline-block;
   background: rgba(0,0,0,0.04);
-  padding: 6px 10px;
-  border-radius: 8px;
+  padding: 4px 8px;
+  border-radius: 6px;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
 }
-.card-title { font-weight: 700; }
+.card-title { font-weight: 700; font-size: 0.98rem; }
 .card-footer { position: relative; height: 0; }
 .card-fio {
   position: absolute;
-  right: 14px;
-  bottom: 10px;
+  right: 12px;
+  bottom: 8px;
   color: var(--muted);
   font-weight: 600;
+  font-size: 0.92rem;
 }
 
 @media (max-width: 520px) {
