@@ -50,17 +50,9 @@ const scheduleData = [
 const renderToday = () => {
   const now = new Date();
   const options = { weekday: 'long', day: 'numeric', month: 'long' };
-  todayDate.textContent = now.toLocaleDateString('ru-RU', options);
+  if (todayDate) todayDate.textContent = now.toLocaleDateString('ru-RU', options);
 };
 
-// --- weekly grouping ---
-const parseDate = (ddmm) => {
-  const [d, m] = ddmm.split('.').map(Number);
-  const year = new Date().getFullYear();
-  return new Date(year, m - 1, d);
-};
-
-// --- weekly grouping (fixed ranges supplied by user) ---
 const parseDate = (ddmm) => {
   const [d, m] = ddmm.split('.').map(Number);
   const year = new Date().getFullYear();
@@ -83,30 +75,36 @@ const weeks = weeksRanges.map((r) => {
   return { key: r.label, items, range: { min: start, max: end } };
 });
 
+const formatShort = (d) => {
+  const dd = String(d.getDate()).padStart(2, '0');
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  return `${dd}.${mm}`;
+};
+
+const updateWeekIndicator = () => {
+  if (!weekIndicator) return;
   if (weeks.length === 0) {
     weekIndicator.textContent = 'Нет недель';
-    prevWeekButton.disabled = true;
-    nextWeekButton.disabled = true;
+    if (prevWeekButton) prevWeekButton.disabled = true;
+    if (nextWeekButton) nextWeekButton.disabled = true;
     return;
   }
-  const wk = weeks[currentWeekIndex];
-  const label = `Неделя ${currentWeekIndex + 1} — ${formatShort(wk.range.min)} \u2014 ${formatShort(wk.range.max)}`;
+  const wk = weeks[currentWeekIndex] || weeks[0];
+  const label = `${wk.key} — ${formatShort(wk.range.min)} \u2014 ${formatShort(wk.range.max)}`;
   weekIndicator.textContent = label;
-  prevWeekButton.disabled = currentWeekIndex <= 0;
-  nextWeekButton.disabled = currentWeekIndex >= weeks.length - 1;
+  if (prevWeekButton) prevWeekButton.disabled = currentWeekIndex <= 0;
+  if (nextWeekButton) nextWeekButton.disabled = currentWeekIndex >= weeks.length - 1;
 };
 
 const renderSchedule = () => {
+  if (!scheduleBody) return;
   if (!weeks || weeks.length === 0 || currentWeekIndex < 0) {
-    scheduleBody.innerHTML = `
-      <tr class="empty-row">
-        <td colspan="5">Расписание пустое.</td>
-      </tr>
-    `;
+    scheduleBody.innerHTML = `\n      <tr class="empty-row">\n        <td colspan="5">Расписание пустое.</td>\n      </tr>\n    `;
+    updateWeekIndicator();
     return;
   }
 
-  const entries = weeks[currentWeekIndex].items.slice().sort((a, b) => a._dateObj - b._dateObj || a.aud - b.aud);
+  const entries = weeks[currentWeekIndex].items.slice().sort((a, b) => a._dateObj - b._dateObj || (a.aud - b.aud));
 
   const groups = entries.reduce((acc, item) => {
     const key = `${item.date}__${item.day}`;
@@ -120,40 +118,26 @@ const renderSchedule = () => {
       return group.items
         .map((it, idx) => {
           if (idx === 0) {
-            return `
-      <tr>
-        <td>${group.header.date}</td>
-        <td>${group.header.day}</td>
-        <td>${it.aud}</td>
-        <td>${it.name}</td>
-        <td>${it.fio}</td>
-      </tr>`;
+            return `\n      <tr>\n        <td>${group.header.date}</td>\n        <td>${group.header.day}</td>\n        <td>${it.aud}</td>\n        <td>${it.name}</td>\n        <td>${it.fio}</td>\n      </tr>`;
           }
-          return `
-      <tr>
-        <td></td>
-        <td></td>
-        <td>${it.aud}</td>
-        <td>${it.name}</td>
-        <td>${it.fio}</td>
-      </tr>`;
+          return `\n      <tr>\n        <td></td>\n        <td></td>\n        <td>${it.aud}</td>\n        <td>${it.name}</td>\n        <td>${it.fio}</td>\n      </tr>`;
         })
         .join('');
     })
     .join('');
 
-  scheduleBody.innerHTML = scheduleRows;
+  scheduleBody.innerHTML = scheduleRows || `\n    <tr class="empty-row">\n      <td colspan="5">Расписание пустое.</td>\n    </tr>`;
   updateWeekIndicator();
 };
 
 const gotoWeek = (delta) => {
-  if (weeks.length === 0) return;
+  if (!weeks || weeks.length === 0) return;
   currentWeekIndex = Math.max(0, Math.min(weeks.length - 1, currentWeekIndex + delta));
   renderSchedule();
 };
 
-prevWeekButton.addEventListener('click', () => gotoWeek(-1));
-nextWeekButton.addEventListener('click', () => gotoWeek(1));
+if (prevWeekButton) prevWeekButton.addEventListener('click', () => gotoWeek(-1));
+if (nextWeekButton) nextWeekButton.addEventListener('click', () => gotoWeek(1));
 
 // Theme toggle logic
 const applyTheme = (theme) => {
