@@ -138,11 +138,10 @@ const renderSchedule = () => {
               typeLabel = 'Практика (семинар)';
               typeClass = 'practice';
             }
-            return `\n        <div class="schedule-card pair-${it.pair}">\n          <div class="card-header">\n            <div class="card-header-left">\n              <span class="card-pair">${it.pair}</span>\n              <span class="card-type ${typeClass}">${typeLabel}</span>\n            </div>\n            <div class="card-aud">Ауд. ${audDisp}</div>\n          </div>\n          <div class="card-body">\n            <div class="card-title">${it.name}</div>\n            <div class="card-subtitle">Аудитория ${audDisp}</div>\n          </div>\n          <div class="card-footer">\n            <div class="card-time">${time}</div>
-            <div class="card-fio">${it.fio}</div>\n          </div>\n        </div>`;
+            return `\n        <div class="schedule-card pair-${it.pair}">\n          <div class="card-header">\n            <div class="card-header-left">\n              <span class="card-pair">${it.pair} пара</span>\n              <span class="card-type ${typeClass}">${typeLabel}</span>\n            </div>\n            <div class="card-aud">${audDisp}</div>\n          </div>\n          <div class="card-body">\n            <div class="card-title">${it.name}</div>\n          </div>\n          <div class="card-footer">\n            <div class="card-time">${time}</div>\n            <div class="card-fio">${it.fio}</div>\n          </div>\n        </div>`;
             })
           .join('');
-        return `\n      <div class="date-group">\n        <div class="date-label">${date}</div>\n        ${cards}\n      </div>`;
+        return `\n      <div class="date-group">\n        <div class="date-label">${date} · ${items[0].day}</div>\n        ${cards}\n      </div>`;
       })
       .join('');
 

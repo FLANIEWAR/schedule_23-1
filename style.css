@@ -266,21 +266,6 @@ button:hover {
   margin: 4px 0 6px;
   font-size: 0.95rem;
 }
-.schedule-card {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  align-items: stretch;
-  padding: 6px;
-  border-radius: 10px;
-  background: var(--surface-strong);
-  border: 1px solid var(--border);
-  position: relative;
-  max-width: 720px;
-  width: 100%;
-  margin-inline: auto;
-}
-
 /* Left accent stripe */
 .schedule-card::before {
   content: '';
@@ -293,8 +278,19 @@ button:hover {
 }
 
 .schedule-card {
-  padding: 16px 16px 30px 16px;
-  padding-left: 20px; /* space for stripe */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+  padding: 20px 20px 22px 20px;
+  border-radius: 18px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  position: relative;
+  max-width: 720px;
+  width: 100%;
+  margin-inline: auto;
+  min-height: 160px;
 }
 
 .schedule-card.pair-4::before { background: #fb923c; }
@@ -303,70 +299,64 @@ button:hover {
 .card-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 16px;
 }
 .card-header-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 .card-aud {
   color: var(--accent);
   font-weight: 700;
-  font-size: 0.86rem;
+  font-size: 0.92rem;
+  background: rgba(37, 99, 235, 0.08);
+  padding: 6px 10px;
+  border-radius: 999px;
 }
 .card-type {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.84rem;
-}
-.card-type.lecture { color: #db2777; background: rgba(219,39,119,0.12); }
-.card-type.practice { color: #f59e0b; background: rgba(245,158,11,0.12); }
-.card-type.exam { color: #fb923c; background: rgba(251,146,60,0.12); }
-.card-pair {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255,255,255,0.15);
-  color: var(--accent);
-  padding: 3px 8px;
+  padding: 5px 10px;
   border-radius: 999px;
   font-weight: 700;
-  margin-bottom: 4px;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
+}
+.card-type.lecture { color: #db2777; background: rgba(219,39,119,0.1); }
+.card-type.practice { color: #f59e0b; background: rgba(245,158,11,0.12); }
+.card-type.exam { color: #fb923c; background: rgba(251,146,60,0.12); }
+.card-pair {
+  color: var(--text);
+  font-weight: 800;
+  font-size: 1rem;
+}
+.card-body {
+  flex: 1;
 }
 .card-title {
-  font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.25;
-}
-.card-subtitle {
-  color: var(--muted);
-  font-size: 0.86rem;
-  margin-top: 4px;
+  font-weight: 800;
+  font-size: 1.08rem;
+  line-height: 1.35;
 }
 .card-footer {
-  position: relative;
-  min-height: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.card-time,
+.card-fio {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 .card-time {
-  position: absolute;
-  left: 20px;
-  bottom: 10px;
-  color: var(--muted);
-  font-weight: 600;
-  font-size: 0.88rem;
+  white-space: nowrap;
 }
 .card-fio {
-  position: absolute;
-  right: 20px;
-  bottom: 10px;
-  color: var(--muted);
-  font-weight: 600;
-  font-size: 0.88rem;
+  text-align: right;
 }
 
 @media (max-width: 520px) {
