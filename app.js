@@ -103,12 +103,16 @@ const renderSchedule = () => {
     return;
   }
 
-  const entries = weeks[currentWeekIndex].items.slice().sort((a, b) => a._dateObj - b._dateObj || Number(a.pair) - Number(b.pair));
+  const allowedPairs = new Set(['4', '5', '6']);
+  const entries = weeks[currentWeekIndex].items
+    .filter((item) => allowedPairs.has(String(item.pair)))
+    .slice()
+    .sort((a, b) => a._dateObj - b._dateObj || Number(a.pair) - Number(b.pair));
 
   const pairTimes = {
-    '4': '14:30–15:15',
-    '5': '16:20–17:05',
-    '6': '17:10–17:55',
+    '4': '14:30–15:15 / 15:20–16:05',
+    '5': '16:20–17:05 / 17:10–17:55',
+    '6': '18:10–18:55 / 19:00–19:45',
   };
 
   const groups = entries.reduce((acc, item) => {
@@ -138,7 +142,7 @@ const renderSchedule = () => {
               typeLabel = 'Практика (семинар)';
               typeClass = 'practice';
             }
-            return `\n        <div class="schedule-card pair-${it.pair}">\n          <div class="card-header">\n            <div class="card-header-left">\n              <span class="card-pair">${it.pair} пара</span>\n              <span class="card-type ${typeClass}">${typeLabel}</span>\n            </div>\n            <div class="card-aud">${audDisp}</div>\n          </div>\n          <div class="card-body">\n            <div class="card-title">${it.name}</div>\n          </div>\n          <div class="card-footer">\n            <div class="card-time">${time}</div>\n            <div class="card-fio">${it.fio}</div>\n          </div>\n        </div>`;
+            return `\n        <div class="schedule-card pair-${it.pair}">\n          <div class="card-header">\n            <div class="card-header-left">\n              <span class="card-pair">${it.pair}</span>\n              <span class="card-type ${typeClass}">${typeLabel}</span>\n            </div>\n            <div class="card-aud">${audDisp}</div>\n          </div>\n          <div class="card-body">\n            <div class="card-title">${it.name}</div>\n          </div>\n          <div class="card-footer">\n            <div class="card-time">${time}</div>\n            <div class="card-fio">${it.fio}</div>\n          </div>\n        </div>`;
             })
           .join('');
         return `\n      <div class="date-group">\n        <div class="date-label">${date} · ${items[0].day}</div>\n        ${cards}\n      </div>`;
